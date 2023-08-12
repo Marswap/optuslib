@@ -44,12 +44,3 @@ class Overview(DashboardOverview):
     start_time: int | None
     usd_liquidity: dict[int, float] = {}
     usd_volume: dict[int, float] = {}
-
-
-class DashboardDexOverview(BaseModel):
-    ton_price: PriceIndicator = PriceIndicator()
-    transactions_24h: Indicator = Indicator()
-    pairs_number: Indicator = Indicator()
-    fees_24h: FeeIndicator = FeeIndicator()
-    liquidity_chart: list[ChartPoint] = []
-    volume_chart: list[ChartPoint] = []
