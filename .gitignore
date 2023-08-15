@@ -1,0 +1,5 @@
+.idea
+.git
+.venv
+.vscode
+__pycache__
