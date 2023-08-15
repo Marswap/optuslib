@@ -20,6 +20,7 @@ class TokenIndicators(BaseModel):
 
 
 class DashboardBasePair(BaseModel):
+    id: int | None
     address: str
     name: str
     token_one: DashboardBaseToken | None
@@ -41,7 +42,6 @@ class DashboardPair(DashboardBasePair):
 
 
 class DashboardExtendedPair(DashboardPair):
-    id: int | None
     start_time: int | None
     token_one_liquidity_change: dict[int, int] = {}
     token_two_liquidity_change: dict[int, int] = {}

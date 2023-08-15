@@ -5,6 +5,7 @@ from .indicators import LiquidityIndicator, UsdLiquidityIndicator, UsdVolumeIndi
 
 
 class DashboardBaseToken(BaseModel):
+    id: int | None
     address: str
     symbol: str
     name: str
@@ -24,10 +25,8 @@ class DashboardToken(DashboardBaseToken):
 
 
 class DashboardExtendedToken(DashboardToken):
-    id: int | None
     start_time: int | None
     usd_price: dict[int, float] = {}
-    is_usd_price_updated: bool | None
     liquidity_change: dict[int, int] = {}
     token_liquidity: dict[int, int] = {}
     token_volume: dict[int, int] = {}
