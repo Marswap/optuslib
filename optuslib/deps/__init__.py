@@ -1,1 +1,1 @@
-from .fast_storage import get_fast_storage
+from .fast_storage import create_fast_storage

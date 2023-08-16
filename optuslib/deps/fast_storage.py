@@ -1,9 +1,5 @@
 from ..storages.redis import RedisStorage
 
 
-async def get_fast_storage():
-    fast_storage = RedisStorage()
-    try:
-        yield fast_storage
-    finally:
-        await fast_storage.close()
+async def create_fast_storage(url: str):
+    return RedisStorage(url=url)
