@@ -14,7 +14,7 @@ class OperationUserAccount(BaseModel):
 
 
 class DashboardBaseOperation(BaseModel):
-    id: int
+    id: int | None
     timestamp: int
     name: str | None
     user_account: OperationUserAccount | None
