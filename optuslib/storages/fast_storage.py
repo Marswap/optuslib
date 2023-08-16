@@ -4,6 +4,7 @@ from ..schemas import (
     DashboardBaseDex,
     DashboardToken,
     DashboardBaseToken,
+    DashboardExtendedToken,
     DashboardPair,
     DashboardBasePair,
     DashboardAccount,
@@ -33,10 +34,15 @@ class FastStorage:
     async def get_dashboard_dex(self, dex_id: int) -> DashboardDex | None:
         ...
 
-    async def set_dashboard_token(self, dashboard_token: DashboardToken, dex_id: int | None) -> None:
+    async def set_dashboard_token(self, dashboard_token: DashboardExtendedToken, dex_id: int | None) -> None:
         ...
 
-    async def get_dashboard_token(self, token_id: int, dex_id: int | None) -> DashboardToken | None:
+    async def get_dashboard_token(
+        self,
+        token_id: int,
+        dex_id: int | None,
+        is_extended: bool = False,
+    ) -> DashboardToken | DashboardExtendedToken | None:
         ...
 
     async def set_dashboard_pair(self, dashboard_pair: DashboardPair, dex_id: int | None) -> None:

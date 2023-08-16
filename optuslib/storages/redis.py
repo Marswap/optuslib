@@ -8,6 +8,7 @@ from ..schemas import (
     DashboardBaseDex,
     DashboardToken,
     DashboardBaseToken,
+    DashboardExtendedToken,
     DashboardPair,
     DashboardBasePair,
     DashboardAccount,
@@ -22,7 +23,7 @@ class RedisStorage(FastStorage):
     async def _set_item(
         self,
         key: str,
-        value: DashboardDexOverview | DashboardDex | DashboardToken | DashboardPair | DashboardAccount,
+        value: DashboardDexOverview | DashboardDex | DashboardExtendedToken | DashboardPair | DashboardAccount,
     ) -> None:
         await self._client.set(
             key,
@@ -102,16 +103,21 @@ class RedisStorage(FastStorage):
             DashboardDex,
         )
 
-    async def set_dashboard_token(self, dashboard_token: DashboardToken, dex_id: int | None) -> None:
+    async def set_dashboard_token(self, dashboard_token: DashboardExtendedToken, dex_id: int | None) -> None:
         await self._set_item(
             f"dashboard:token:{dashboard_token.id}:{dex_id}",
             dashboard_token,
         )
 
-    async def get_dashboard_token(self, token_id: int, dex_id: int | None) -> DashboardToken | None:
+    async def get_dashboard_token(
+        self,
+        token_id: int,
+        dex_id: int | None,
+        is_extended: bool = False,
+    ) -> DashboardToken | DashboardExtendedToken | None:
         return await self._get_item(
             f"dashboard:token:{token_id}:{dex_id}",
-            DashboardToken,
+            DashboardExtendedToken if is_extended else DashboardToken,
         )
 
     async def set_dashboard_pair(self, dashboard_pair: DashboardPair, dex_id: int | None) -> None:
