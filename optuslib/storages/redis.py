@@ -58,12 +58,11 @@ class RedisStorage(FastStorage):
         schema,
     ) -> list:
         raw_list = await self._client.get(key)
-        print(type(raw_list), raw_list)
 
         if not raw_list:
             return None
 
-        return [schema.parse_raw(item) for item in json.loads(raw_list)]
+        return [schema.parse_obj(item) for item in json.loads(raw_list)]
 
     async def close(self) -> None:
         await self._client.close()
