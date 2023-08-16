@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from indicators import Indicator, UsdAmount
+from .indicators import Indicator, UsdAmount
 
 
 class OperationToken(BaseModel):
