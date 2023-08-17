@@ -9,7 +9,7 @@ class DashboardBaseToken(BaseModel):
     address: str
     symbol: str
     name: str
-    icon: str
+    image: str | None
     decimals: int
     native_liquidity: LiquidityIndicator = LiquidityIndicator()
     liquidity: UsdLiquidityIndicator = UsdLiquidityIndicator()
