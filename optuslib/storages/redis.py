@@ -36,7 +36,6 @@ class RedisStorage(FastStorage):
         schema,
     ) -> DashboardDexOverview | DashboardDex | DashboardToken | DashboardPair | DashboardAccount | None:
         raw_value = await self._client.get(key)
-        print(type(raw_value), raw_value)
 
         if not raw_value:
             return None
