@@ -62,6 +62,9 @@ class RedisStorage(FastStorage):
         if not raw_list:
             return None
 
+        for item in json.loads(raw_list):
+            print(type(item), item)
+
         return [schema.parse_obj(item) for item in json.loads(raw_list)]
 
     async def close(self) -> None:
