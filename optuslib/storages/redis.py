@@ -49,7 +49,7 @@ class RedisStorage(FastStorage):
     ) -> None:
         await self._client.set(
             key,
-            json.dumps([item.json(exclude_none=True) for item in item_list]),
+            json.dumps([item.dict(exclude_none=True) for item in item_list]),
         )
 
     async def _get_list(
@@ -61,9 +61,6 @@ class RedisStorage(FastStorage):
 
         if not raw_list:
             return None
-
-        for item in json.loads(raw_list):
-            print(type(item), item)
 
         return [schema.parse_obj(item) for item in json.loads(raw_list)]
 
