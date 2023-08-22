@@ -3,6 +3,7 @@ from .account import DashboardBaseAccount, DashboardAccount
 from .charts import ChartPoint, CandleChartPoint, Chart
 from .dex_overview import DashboardDexOverview
 from .dex import DashboardBaseDex, DashboardDex, DashboardExtendedDex
+from .fee import DashboardFeeChart
 from .indicators import (
     Indicator,
     LiquidityIndicator,
