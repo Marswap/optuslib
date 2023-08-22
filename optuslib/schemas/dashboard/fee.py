@@ -4,5 +4,5 @@ from .charts import Chart
 
 
 class DashboardFeeChart(BaseModel):
-    daily: Chart
-    cumulative: Chart
+    daily: Chart = Chart()
+    cumulative: Chart = Chart()
