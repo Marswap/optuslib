@@ -131,6 +131,18 @@ class RedisStorage(FastStorage):
             DashboardPair,
         )
 
+    async def set_dashboard_pool(self, dashboard_pair: DashboardPair, pool_id: int) -> None:
+        await self._set_item(
+            f"dashboard:pool:{pool_id}",
+            dashboard_pair,
+        )
+
+    async def get_dashboard_pool(self, pool_id: int) -> DashboardPair | None:
+        return await self._get_item(
+            f"dashboard:pool:{pool_id}",
+            DashboardPair,
+        )
+
     async def set_dashboard_account(self, dashboard_account: DashboardAccount) -> None:
         ...
 
