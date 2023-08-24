@@ -17,6 +17,13 @@ def operation_is_swap(
         )
 
 
+def get_start_time(
+    seq: PairSequence,
+    default: int,
+) -> int | None:
+    return min(seq.token_0.keys(), default=default)
+
+
 def calc_liquidity_change(
     operations: list[Operation],
     time_interval: int,
@@ -80,3 +87,27 @@ def calc_swap_count_change(
             change[operation.pool.id][day] = change[operation.pool.id].get(day, 0) + 1
 
     return change
+
+
+def calc_liquidity_sequence(
+    liquidity_changes: dict[int, PairSequence],
+    now_timestamp: int,
+    time_interval: int,
+) -> dict[int, PairSequence]:
+    liquidity: dict[int, PairSequence] = {}
+
+    for pool_id, changes in liquidity_changes.items():
+        liquidity[pool_id] = PairSequence()
+
+        start_time = get_start_time(changes, now_timestamp)
+
+        for day in range(start_time, now_timestamp, time_interval):
+            liquidity[pool_id].token_0[day] = liquidity[pool_id].token_0.get(
+                day - time_interval, 0
+            ) + changes.token_0.get(day, 0)
+
+            liquidity[pool_id].token_1[day] = liquidity[pool_id].token_1.get(
+                day - time_interval, 0
+            ) + changes.token_1.get(day, 0)
+
+    return liquidity
