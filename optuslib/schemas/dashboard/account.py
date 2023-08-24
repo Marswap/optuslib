@@ -2,6 +2,7 @@ from pydantic import BaseModel
 
 from .charts import Chart
 from .indicators import Indicator, UsdLiquidity, UsdVolume
+from .pair import DashboardExtendedPair
 
 
 class DashboardBaseAccount(BaseModel):
@@ -17,3 +18,8 @@ class DashboardBaseAccount(BaseModel):
 class DashboardAccount(DashboardBaseAccount):
     liquidity_chart: Chart = Chart()
     volume_chart: Chart = Chart()
+
+
+class DashboardExtendedAccount(DashboardAccount):
+    start_time: int | None
+    pool_data: dict[int, DashboardExtendedPair]

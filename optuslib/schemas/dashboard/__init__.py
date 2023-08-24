@@ -1,5 +1,5 @@
 from .db import *
-from .account import DashboardBaseAccount, DashboardAccount
+from .account import DashboardBaseAccount, DashboardAccount, DashboardExtendedAccount
 from .charts import ChartPoint, CandleChartPoint, Chart
 from .dex_overview import DashboardDexOverview
 from .dex import DashboardBaseDex, DashboardDex, DashboardExtendedDex
