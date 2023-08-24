@@ -19,3 +19,8 @@ class CandleChartPoint(BaseModel):
 class Chart(BaseModel):
     ton: list[ChartPoint] = []
     usd: list[ChartPoint] = []
+
+
+class PairSequence(BaseModel):
+    token_0: dict[int, int] = {}
+    token_1: dict[int, int] = {}

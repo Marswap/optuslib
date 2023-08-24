@@ -1,6 +1,6 @@
 from .db import *
 from .account import DashboardBaseAccount, DashboardAccount, DashboardExtendedAccount
-from .charts import ChartPoint, CandleChartPoint, Chart
+from .charts import ChartPoint, CandleChartPoint, Chart, PairSequence
 from .dex_overview import DashboardDexOverview
 from .dex import DashboardBaseDex, DashboardDex, DashboardExtendedDex
 from .fee import DashboardFeeChart

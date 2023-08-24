@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 
-from .charts import ChartPoint, CandleChartPoint
+from .charts import ChartPoint, CandleChartPoint, PairSequence
 from .indicators import (
     PriceIndicator,
     LiquidityIndicator,
@@ -43,6 +43,9 @@ class DashboardPair(DashboardBasePair):
 
 class DashboardExtendedPair(DashboardPair):
     start_time: int | None
+    liquidity_change: PairSequence = PairSequence()
+    liquidity_seq: PairSequence = PairSequence()
+    volume_sec: PairSequence = PairSequence()
     token_one_liquidity_change: dict[int, int] = {}
     token_two_liquidity_change: dict[int, int] = {}
     token_one_liquidity: dict[int, int] = {}
