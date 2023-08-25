@@ -24,30 +24,47 @@ def get_start_time(
     return min(seq.token_0.keys(), default=default)
 
 
-def calc_liquidity_change(
+def calc_liquidity_sequence_map(
     operations: list[Operation],
     time_interval: int,
+    now_timestamp: int,
 ) -> dict[int, PairSequence]:
-    changes: dict[int, PairSequence] = {}
+    change_seq_map: dict[int, PairSequence] = {}
 
     for operation in operations:
-        day = timestamp_point(operation.timestamp, time_interval)
+        time_key = timestamp_point(operation.timestamp, time_interval)
 
-        if operation.pool.id not in changes:
-            changes[operation.pool.id] = PairSequence()
+        if operation.pool.id not in change_seq_map:
+            change_seq_map[operation.pool.id] = PairSequence()
 
-        changes[operation.pool.id].token_0[day] = (
-            changes[operation.pool.id].token_0.get(day, 0) + operation.token_0_amount
+        change_seq_map[operation.pool.id].token_0[time_key] = (
+            change_seq_map[operation.pool.id].token_0.get(time_key, 0) + operation.token_0_amount
         )
 
-        changes[operation.pool.id].token_1[day] = (
-            changes[operation.pool.id].token_1.get(day, 0) + operation.token_1_amount
+        change_seq_map[operation.pool.id].token_1[time_key] = (
+            change_seq_map[operation.pool.id].token_1.get(time_key, 0) + operation.token_1_amount
         )
 
-    return changes
+    liquidity_sec_map: dict[int, PairSequence] = {}
+
+    for pool_id, change_seq in change_seq_map.items():
+        liquidity_sec_map[pool_id] = PairSequence()
+
+        start_time = get_start_time(change_seq, now_timestamp)
+
+        for time_key in range(start_time, now_timestamp, time_interval):
+            liquidity_sec_map[pool_id].token_0[time_key] = liquidity_sec_map[pool_id].token_0.get(
+                time_key - time_interval, 0
+            ) + change_seq.token_0.get(time_key, 0)
+
+            liquidity_sec_map[pool_id].token_1[time_key] = liquidity_sec_map[pool_id].token_1.get(
+                time_key - time_interval, 0
+            ) + change_seq.token_1.get(time_key, 0)
+
+    return liquidity_sec_map
 
 
-def calc_volume_change(
+def calc_volume_sequence_map(
     operations: list[Operation],
     time_interval: int,
 ) -> dict[int, PairSequence]:
@@ -71,43 +88,19 @@ def calc_volume_change(
     return changes
 
 
-def calc_swap_count_change(
+def calc_swap_count_sequence_map(
     operations: list[Operation],
     time_interval: int,
 ) -> dict[int, dict[int, int]]:
-    change: dict[int, dict[int, int]] = {}
+    seq_map: dict[int, dict[int, int]] = {}
 
     for operation in operations:
-        if operation.pool.id not in change:
-            change[operation.pool.id] = {}
+        if operation.pool.id not in seq_map:
+            seq_map[operation.pool.id] = {}
 
         if operation_is_swap(operation):
             day = timestamp_point(operation.timestamp, time_interval)
 
-            change[operation.pool.id][day] = change[operation.pool.id].get(day, 0) + 1
+            seq_map[operation.pool.id][day] = seq_map[operation.pool.id].get(day, 0) + 1
 
-    return change
-
-
-def calc_liquidity_sequence(
-    liquidity_changes: dict[int, PairSequence],
-    now_timestamp: int,
-    time_interval: int,
-) -> dict[int, PairSequence]:
-    liquidity: dict[int, PairSequence] = {}
-
-    for pool_id, changes in liquidity_changes.items():
-        liquidity[pool_id] = PairSequence()
-
-        start_time = get_start_time(changes, now_timestamp)
-
-        for day in range(start_time, now_timestamp, time_interval):
-            liquidity[pool_id].token_0[day] = liquidity[pool_id].token_0.get(
-                day - time_interval, 0
-            ) + changes.token_0.get(day, 0)
-
-            liquidity[pool_id].token_1[day] = liquidity[pool_id].token_1.get(
-                day - time_interval, 0
-            ) + changes.token_1.get(day, 0)
-
-    return liquidity
+    return seq_map
