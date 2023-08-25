@@ -13,6 +13,7 @@ from ..schemas import (
     DashboardBasePair,
     DashboardAccount,
     DashboardBaseAccount,
+    Pool,
 )
 
 
@@ -131,18 +132,6 @@ class RedisStorage(FastStorage):
             DashboardPair,
         )
 
-    async def set_dashboard_pool(self, dashboard_pair: DashboardPair, pool_id: int) -> None:
-        await self._set_item(
-            f"dashboard:pool:{pool_id}",
-            dashboard_pair,
-        )
-
-    async def get_dashboard_pool(self, pool_id: int) -> DashboardPair | None:
-        return await self._get_item(
-            f"dashboard:pool:{pool_id}",
-            DashboardPair,
-        )
-
     async def set_dashboard_account(self, dashboard_account: DashboardAccount) -> None:
         ...
 
@@ -195,4 +184,16 @@ class RedisStorage(FastStorage):
         return await self._get_list(
             f"dashboard:account_list:{dex_id}",
             DashboardBaseAccount,
+        )
+
+    async def set_pool_list(self, pool_list: list[Pool]) -> None:
+        await self._set_list(
+            "pool_list",
+            pool_list,
+        )
+
+    async def get_pool_list(self) -> list[Pool] | None:
+        return await self._get_list(
+            "pool_list",
+            Pool,
         )

@@ -9,6 +9,7 @@ from ..schemas import (
     DashboardBasePair,
     DashboardAccount,
     DashboardBaseAccount,
+    Pool,
 )
 
 
@@ -51,12 +52,6 @@ class FastStorage:
     async def get_dashboard_pair(self, pair_id: int, dex_id: int | None) -> DashboardPair | None:
         ...
 
-    async def set_dashboard_pool(self, dashboard_pair: DashboardPair, pool_id: int) -> None:
-        ...
-
-    async def get_dashboard_pool(self, pool_id: int) -> DashboardPair | None:
-        ...
-
     async def set_dashboard_account(self, dashboard_account: DashboardAccount) -> None:
         ...
 
@@ -85,4 +80,10 @@ class FastStorage:
         ...
 
     async def get_dashboard_account_list(self, dex_id: int | None) -> list[DashboardBaseAccount] | None:
+        ...
+
+    async def set_pool_list(self, pool_list: list[Pool]) -> None:
+        ...
+
+    async def get_pool_list(self) -> list[Pool] | None:
         ...
