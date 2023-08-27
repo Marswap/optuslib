@@ -104,3 +104,7 @@ def calc_swap_count_sequence_map(
             seq_map[operation.pool.id][day] = seq_map[operation.pool.id].get(day, 0) + 1
 
     return seq_map
+
+
+def value_with_decimals(self, value: int, decimals: int) -> float:
+    return value / 10**decimals
