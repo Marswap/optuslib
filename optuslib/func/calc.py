@@ -109,7 +109,7 @@ def calc_swap_count_sequence_map(
     return seq_map
 
 
-def value_with_decimals(self, value: int, decimals: int) -> float:
+def value_with_decimals(value: int, decimals: int) -> float:
     return value / 10**decimals
 
 
