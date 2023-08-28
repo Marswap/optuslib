@@ -102,9 +102,9 @@ def calc_swap_count_sequence_map(
             seq_map[operation.pool.id] = {}
 
         if operation_is_swap(operation):
-            day = timestamp_point(operation.timestamp, time_interval)
+            time_key = timestamp_point(operation.timestamp, time_interval)
 
-            seq_map[operation.pool.id][day] = seq_map[operation.pool.id].get(day, 0) + 1
+            seq_map[operation.pool.id][time_key] = seq_map[operation.pool.id].get(time_key, 0) + 1
 
     return seq_map
 
