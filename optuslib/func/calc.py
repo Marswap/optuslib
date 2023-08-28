@@ -1,5 +1,8 @@
+from datetime import datetime, timezone
+
+from ..constants import USD_LIQUIDITY_ROUND_DECIMALS, USD_VOLUME_ROUND_DECIMALS
 from .time import timestamp_point
-from ..schemas.dashboard.charts import PairSequence
+from ..schemas.dashboard.charts import PairSequence, ChartPoint
 from ..schemas.dashboard.db.operation import Operation
 
 
@@ -108,3 +111,21 @@ def calc_swap_count_sequence_map(
 
 def value_with_decimals(self, value: int, decimals: int) -> float:
     return value / 10**decimals
+
+
+def calc_liquidity_chart(liquidity_seq: dict[int, float]) -> list[ChartPoint]:
+    return calc_chart(liquidity_seq, USD_LIQUIDITY_ROUND_DECIMALS)
+
+
+def calc_volume_chart(volume_seq: dict[int, float]) -> list[ChartPoint]:
+    return calc_chart(volume_seq, USD_VOLUME_ROUND_DECIMALS)
+
+
+def calc_chart(seq: dict[int, float] | dict[int, int], decimals: int) -> list[ChartPoint]:
+    return [
+        ChartPoint(
+            time=datetime.fromtimestamp(timestamp, timezone.utc).strftime("%Y-%m-%d"),
+            value=round(value, decimals),
+        )
+        for timestamp, value in sorted(seq.items())
+    ]
