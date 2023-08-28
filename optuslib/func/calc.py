@@ -75,16 +75,16 @@ def calc_volume_sequence_map(
 
     for operation in operations:
         if operation_is_swap(operation):
-            day = timestamp_point(operation.timestamp, time_interval)
+            time_key = timestamp_point(operation.timestamp, time_interval)
 
             if operation.pool.id not in changes:
                 changes[operation.pool.id] = PairSequence()
 
-            changes[operation.pool.id].token_0[day] = changes[operation.pool.id].token_0.get(day, 0) + abs(
+            changes[operation.pool.id].token_0[time_key] = changes[operation.pool.id].token_0.get(time_key, 0) + abs(
                 operation.token_0_amount
             )
 
-            changes[operation.pool.id].token_1[day] = changes[operation.pool.id].token_1.get(day, 0) + abs(
+            changes[operation.pool.id].token_1[time_key] = changes[operation.pool.id].token_1.get(time_key, 0) + abs(
                 operation.token_1_amount
             )
 
