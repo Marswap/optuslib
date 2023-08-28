@@ -121,11 +121,15 @@ def calc_volume_chart(volume_seq: dict[int, float]) -> list[ChartPoint]:
     return calc_chart(volume_seq, USD_VOLUME_ROUND_DECIMALS)
 
 
-def calc_chart(seq: dict[int, float] | dict[int, int], decimals: int) -> list[ChartPoint]:
+def calc_swaps_chart(swaps_seq: dict[int, int]) -> list[ChartPoint]:
+    return calc_chart(swaps_seq)
+
+
+def calc_chart(seq: dict[int, float] | dict[int, int], decimals: int | None = None) -> list[ChartPoint]:
     return [
         ChartPoint(
             time=datetime.fromtimestamp(timestamp, timezone.utc).strftime("%Y-%m-%d"),
-            value=round(value, decimals),
+            value=value if decimals is None else round(value, decimals),
         )
         for timestamp, value in sorted(seq.items())
     ]

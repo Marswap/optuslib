@@ -5,6 +5,7 @@ from .calc import (
     value_with_decimals,
     calc_liquidity_chart,
     calc_volume_chart,
+    calc_swaps_chart,
 )
 
 from .time import (
