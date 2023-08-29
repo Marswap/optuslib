@@ -21,10 +21,16 @@ def operation_is_swap(
 
 
 def get_start_time(
-    seq: PairSequence,
+    seq: PairSequence | dict[int, int],
     default: int,
 ) -> int | None:
-    return min(seq.token_0.keys(), default=default)
+    if isinstance(seq, PairSequence):
+        return min(seq.token_0.keys(), default=default)
+
+    if isinstance(seq, dict):
+        return min(seq.keys(), default=default)
+
+    return None
 
 
 def calc_liquidity_sequence_map(
