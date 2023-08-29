@@ -134,7 +134,7 @@ def calc_swaps_sequence_map(
         start_time = get_start_time(change_seq, now_timestamp)
 
         for time_key in range(start_time, now_timestamp, time_interval):
-            swaps_seq_map[pool_id][time_key] = change_seq(time_key, 0)
+            swaps_seq_map[pool_id][time_key] = change_seq.get(time_key, 0)
 
     return swaps_seq_map
 
