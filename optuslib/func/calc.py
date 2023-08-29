@@ -33,30 +33,39 @@ def get_start_time(
     return None
 
 
+def calc_liquidity_change_map(
+    operations: list[Operation],
+    time_interval: int,
+) -> dict[int, PairSequence]:
+    change_map: dict[int, PairSequence] = {}
+
+    for operation in operations:
+        time_key = timestamp_point(operation.timestamp, time_interval)
+
+        if operation.pool.id not in change_map:
+            change_map[operation.pool.id] = PairSequence()
+
+        change_map[operation.pool.id].token_0[time_key] = (
+            change_map[operation.pool.id].token_0.get(time_key, 0) + operation.token_0_amount
+        )
+
+        change_map[operation.pool.id].token_1[time_key] = (
+            change_map[operation.pool.id].token_1.get(time_key, 0) + operation.token_1_amount
+        )
+
+    return change_map
+
+
 def calc_liquidity_sequence_map(
     operations: list[Operation],
     time_interval: int,
     now_timestamp: int,
 ) -> dict[int, PairSequence]:
-    change_seq_map: dict[int, PairSequence] = {}
-
-    for operation in operations:
-        time_key = timestamp_point(operation.timestamp, time_interval)
-
-        if operation.pool.id not in change_seq_map:
-            change_seq_map[operation.pool.id] = PairSequence()
-
-        change_seq_map[operation.pool.id].token_0[time_key] = (
-            change_seq_map[operation.pool.id].token_0.get(time_key, 0) + operation.token_0_amount
-        )
-
-        change_seq_map[operation.pool.id].token_1[time_key] = (
-            change_seq_map[operation.pool.id].token_1.get(time_key, 0) + operation.token_1_amount
-        )
+    change_map = calc_liquidity_change_map(operations, time_interval)
 
     liquidity_seq_map: dict[int, PairSequence] = {}
 
-    for pool_id, change_seq in change_seq_map.items():
+    for pool_id, change_seq in change_map.items():
         liquidity_seq_map[pool_id] = PairSequence()
 
         start_time = get_start_time(change_seq, now_timestamp)
@@ -73,31 +82,40 @@ def calc_liquidity_sequence_map(
     return liquidity_seq_map
 
 
-def calc_volume_sequence_map(
+def calc_volume_change_map(
     operations: list[Operation],
     time_interval: int,
-    now_timestamp: int,
 ) -> dict[int, PairSequence]:
-    change_seq_map: dict[int, PairSequence] = {}
+    change_map: dict[int, PairSequence] = {}
 
     for operation in operations:
         if operation_is_swap(operation):
             time_key = timestamp_point(operation.timestamp, time_interval)
 
-            if operation.pool.id not in change_seq_map:
-                change_seq_map[operation.pool.id] = PairSequence()
+            if operation.pool.id not in change_map:
+                change_map[operation.pool.id] = PairSequence()
 
-            change_seq_map[operation.pool.id].token_0[time_key] = change_seq_map[operation.pool.id].token_0.get(
+            change_map[operation.pool.id].token_0[time_key] = change_map[operation.pool.id].token_0.get(
                 time_key, 0
             ) + abs(operation.token_0_amount)
 
-            change_seq_map[operation.pool.id].token_1[time_key] = change_seq_map[operation.pool.id].token_1.get(
+            change_map[operation.pool.id].token_1[time_key] = change_map[operation.pool.id].token_1.get(
                 time_key, 0
             ) + abs(operation.token_1_amount)
 
+    return change_map
+
+
+def calc_volume_sequence_map(
+    operations: list[Operation],
+    time_interval: int,
+    now_timestamp: int,
+) -> dict[int, PairSequence]:
+    change_map = calc_volume_change_map(operations, time_interval)
+
     volume_seq_map: dict[int, PairSequence] = {}
 
-    for pool_id, change_seq in change_seq_map.items():
+    for pool_id, change_seq in change_map.items():
         volume_seq_map[pool_id] = PairSequence()
 
         start_time = get_start_time(change_seq, now_timestamp)
@@ -110,21 +128,30 @@ def calc_volume_sequence_map(
     return volume_seq_map
 
 
+def calc_swaps_change_map(
+    operations: list[Operation],
+    time_interval: int,
+) -> dict[int, dict[int, int]]:
+    change_map: dict[int, dict[int, int]] = {}
+
+    for operation in operations:
+        if operation.pool.id not in change_map:
+            change_map[operation.pool.id] = {}
+
+        if operation_is_swap(operation):
+            time_key = timestamp_point(operation.timestamp, time_interval)
+
+            change_map[operation.pool.id][time_key] = change_map[operation.pool.id].get(time_key, 0) + 1
+
+    return change_map
+
+
 def calc_swaps_sequence_map(
     operations: list[Operation],
     time_interval: int,
     now_timestamp: int,
 ) -> dict[int, dict[int, int]]:
-    change_seq_map: dict[int, dict[int, int]] = {}
-
-    for operation in operations:
-        if operation.pool.id not in change_seq_map:
-            change_seq_map[operation.pool.id] = {}
-
-        if operation_is_swap(operation):
-            time_key = timestamp_point(operation.timestamp, time_interval)
-
-            change_seq_map[operation.pool.id][time_key] = change_seq_map[operation.pool.id].get(time_key, 0) + 1
+    change_seq_map = calc_swaps_change_map(operations, time_interval)
 
     swaps_seq_map: dict[int, dict[int, int]] = {}
 

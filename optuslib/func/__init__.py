@@ -1,4 +1,7 @@
 from .calc import (
+    calc_liquidity_change_map,
+    calc_volume_change_map,
+    calc_swaps_change_map,
     calc_liquidity_sequence_map,
     calc_volume_sequence_map,
     calc_swaps_sequence_map,
