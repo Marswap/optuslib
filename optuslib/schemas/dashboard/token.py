@@ -15,7 +15,7 @@ class DashboardBaseToken(BaseModel):
     liquidity: UsdLiquidityIndicator = UsdLiquidityIndicator()
     volume_24h: UsdVolumeIndicator = UsdVolumeIndicator()
     current_usd_price: PriceIndicator = PriceIndicator()
-    transactions_24h: Indicator = Indicator()
+    swaps_24: Indicator = Indicator()
 
 
 class DashboardToken(DashboardBaseToken):

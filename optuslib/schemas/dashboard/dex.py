@@ -6,7 +6,7 @@ from .indicators import Indicator, UsdLiquidity, UsdVolume, PriceIndicator, FeeI
 class DashboardBaseDex(Dex):
     liquidity: UsdLiquidity = UsdLiquidity()
     volume_24h: UsdVolume = UsdVolume()
-    transactions_24h: Indicator = Indicator()
+    swaps_24h: Indicator = Indicator()
     pairs_number: Indicator = Indicator()
 
 

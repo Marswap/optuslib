@@ -30,7 +30,7 @@ class BlockchainOverview(BaseModel):
 
 class DashboardOverview(BaseModel):
     ton_price: PriceIndicator = PriceIndicator()
-    transactions_24h: Indicator = Indicator()
+    swaps_24: Indicator = Indicator()
     pairs_number: Indicator = Indicator()
     fees_24h: FeeIndicator = FeeIndicator()
     liquidity_graph: list[ChartPoint] = []
