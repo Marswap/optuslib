@@ -40,6 +40,9 @@ def calc_liquidity_change_map(
     change_map: dict[int, PairSequence] = {}
 
     for operation in operations:
+        if not operation.pool:
+            continue
+
         time_key = timestamp_point(operation.timestamp, time_interval)
 
         if operation.pool.id not in change_map:
@@ -89,6 +92,9 @@ def calc_volume_change_map(
     change_map: dict[int, PairSequence] = {}
 
     for operation in operations:
+        if not operation.pool:
+            continue
+
         if operation_is_swap(operation):
             time_key = timestamp_point(operation.timestamp, time_interval)
 
@@ -135,6 +141,9 @@ def calc_swaps_change_map(
     change_map: dict[int, dict[int, int]] = {}
 
     for operation in operations:
+        if not operation.pool:
+            continue
+
         if operation.pool.id not in change_map:
             change_map[operation.pool.id] = {}
 
