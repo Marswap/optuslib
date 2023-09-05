@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 
+from .base import DashboardBase
 from .indicators import Indicator, UsdAmount
 
 
@@ -8,9 +9,8 @@ class OperationToken(BaseModel):
     amount: Indicator = Indicator()
 
 
-class OperationUserAccount(BaseModel):
-    id: int
-    address: str
+class OperationUserAccount(DashboardBase):
+    pass
 
 
 class DashboardBaseOperation(BaseModel):

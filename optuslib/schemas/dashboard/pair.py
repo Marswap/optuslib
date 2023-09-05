@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-
+from .base import DashboardBase
 from .charts import ChartPoint, CandleChartPoint, PairSequence
 from .indicators import (
     PriceIndicator,
@@ -19,9 +19,7 @@ class TokenIndicators(BaseModel):
     current_usd_price: PriceIndicator = PriceIndicator()
 
 
-class DashboardBasePair(BaseModel):
-    id: int | None
-    address: str
+class DashboardBasePair(DashboardBase):
     name: str
     token_one: DashboardBaseToken | None
     token_two: DashboardBaseToken | None

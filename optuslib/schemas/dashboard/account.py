@@ -1,12 +1,9 @@
-from pydantic import BaseModel
-
+from .base import DashboardBase
 from .charts import Chart, ChartPoint
 from .indicators import Indicator, UsdLiquidity, UsdVolume
 
 
-class DashboardBaseAccount(BaseModel):
-    id: int | None
-    address: str
+class DashboardBaseAccount(DashboardBase):
     name: str | None
     description: str | None
     liquidity: UsdLiquidity = UsdLiquidity()

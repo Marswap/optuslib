@@ -1,12 +1,9 @@
-from pydantic import BaseModel
-
+from .base import DashboardBase
 from .charts import ChartPoint, CandleChartPoint
 from .indicators import LiquidityIndicator, UsdLiquidityIndicator, UsdVolumeIndicator, PriceIndicator, Indicator
 
 
-class DashboardBaseToken(BaseModel):
-    id: int | None
-    address: str
+class DashboardBaseToken(DashboardBase):
     symbol: str
     name: str
     image: str | None
