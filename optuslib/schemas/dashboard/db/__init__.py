@@ -1,3 +1,4 @@
+from .aggregated_data import AggregatedData
 from .contract_metadata import ContractMetadata
 from .contract import Contract
 from .dex_trace import DexTrace
