@@ -17,3 +17,6 @@ class AggregatedData(BaseModel):
     token_contract: Contract | None
     user_contract: Contract | None
     data: Data = Data()
+
+    class Config:
+        orm_mode = True
