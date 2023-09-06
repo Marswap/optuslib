@@ -79,6 +79,15 @@ class RedisStorage(FastStorage):
 
         return {int(key): value for key, value in json.loads(price).items()}
 
+    async def set_ton_usd_price(self, price: dict[int, float]) -> None:
+        await self.set_price(
+            "ton_usd_price",
+            price,
+        )
+
+    async def get_ton_usd_price(self) -> dict[int, float] | None:
+        return await self.get_price("ton_usd_price")
+
     async def set_dashboard_dex_overview(self, dashboard_dex_overview: DashboardDexOverview) -> None:
         await self._set_item(
             "dashboard:dex_overview",
