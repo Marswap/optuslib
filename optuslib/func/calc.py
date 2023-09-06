@@ -20,6 +20,24 @@ def operation_is_swap(
         )
 
 
+def operation_is_add(
+    operation: Operation,
+) -> bool:
+    if operation.operation_type:
+        return operation.operation_type.name == "add"
+    else:
+        return operation.token_0_amount >= 0 and operation.token_1_amount >= 0
+
+
+def operation_is_remove(
+    operation: Operation,
+) -> bool:
+    if operation.operation_type:
+        return operation.operation_type.name == "remove"
+    else:
+        return operation.token_0_amount <= 0 and operation.token_1_amount <= 0
+
+
 def get_start_time(
     seq: PairSequence | dict[int, int],
     default: int,
@@ -43,18 +61,19 @@ def calc_liquidity_change_map(
         if not operation.pool:
             continue
 
-        time_key = timestamp_point(operation.timestamp, time_interval)
+        if operation_is_add(operation) or operation_is_remove(operation):
+            time_key = timestamp_point(operation.timestamp, time_interval)
 
-        if operation.pool.id not in change_map:
-            change_map[operation.pool.id] = PairSequence()
+            if operation.pool.id not in change_map:
+                change_map[operation.pool.id] = PairSequence()
 
-        change_map[operation.pool.id].token_0[time_key] = (
-            change_map[operation.pool.id].token_0.get(time_key, 0) + operation.token_0_amount
-        )
+            change_map[operation.pool.id].token_0[time_key] = (
+                change_map[operation.pool.id].token_0.get(time_key, 0) + operation.token_0_amount
+            )
 
-        change_map[operation.pool.id].token_1[time_key] = (
-            change_map[operation.pool.id].token_1.get(time_key, 0) + operation.token_1_amount
-        )
+            change_map[operation.pool.id].token_1[time_key] = (
+                change_map[operation.pool.id].token_1.get(time_key, 0) + operation.token_1_amount
+            )
 
     return change_map
 
