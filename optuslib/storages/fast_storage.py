@@ -2,6 +2,7 @@ from ..schemas import (
     DashboardDexOverview,
     DashboardDex,
     DashboardBaseDex,
+    DashboardExtendedDex,
     DashboardToken,
     DashboardBaseToken,
     DashboardExtendedToken,
@@ -35,10 +36,14 @@ class FastStorage:
     async def get_dashboard_dex_overview(self) -> DashboardDexOverview | None:
         ...
 
-    async def set_dashboard_dex(self, dashboard_dex: DashboardDex) -> None:
+    async def set_dashboard_dex(self, dashboard_dex: DashboardExtendedDex) -> None:
         ...
 
-    async def get_dashboard_dex(self, dex_id: int) -> DashboardDex | None:
+    async def get_dashboard_dex(
+        self,
+        dex_id: int,
+        is_extended: bool = False,
+    ) -> DashboardDex | DashboardExtendedDex | None:
         ...
 
     async def set_dashboard_token(self, dashboard_token: DashboardExtendedToken, dex_id: int | None) -> None:

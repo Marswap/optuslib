@@ -6,6 +6,7 @@ from ..schemas import (
     DashboardDexOverview,
     DashboardDex,
     DashboardBaseDex,
+    DashboardExtendedDex,
     DashboardToken,
     DashboardBaseToken,
     DashboardExtendedToken,
@@ -100,16 +101,20 @@ class RedisStorage(FastStorage):
             DashboardDexOverview,
         )
 
-    async def set_dashboard_dex(self, dashboard_dex: DashboardDex) -> None:
+    async def set_dashboard_dex(self, dashboard_dex: DashboardExtendedDex) -> None:
         await self._set_item(
             f"dashboard:dex:{dashboard_dex.id}",
             dashboard_dex,
         )
 
-    async def get_dashboard_dex(self, dex_id: int) -> DashboardDex | None:
+    async def get_dashboard_dex(
+        self,
+        dex_id: int,
+        is_extended: bool = False,
+    ) -> DashboardDex | DashboardExtendedDex | None:
         return await self._get_item(
             f"dashboard:dex:{dex_id}",
-            DashboardDex,
+            DashboardExtendedDex if is_extended else DashboardDex,
         )
 
     async def set_dashboard_token(self, dashboard_token: DashboardExtendedToken, dex_id: int | None) -> None:
