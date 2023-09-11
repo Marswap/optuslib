@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from .charts import ChartPoint
+from .charts import Chart
 from .indicators import PriceIndicator, Indicator, FeeIndicator
 
 
@@ -9,5 +9,5 @@ class DashboardDexOverview(BaseModel):
     swaps_24h: Indicator = Indicator()
     pairs_number: Indicator = Indicator()
     fees_24h: FeeIndicator = FeeIndicator()
-    liquidity_chart: list[ChartPoint] = []
-    volume_chart: list[ChartPoint] = []
+    liquidity_chart: Chart = Chart()
+    volume_chart: Chart = Chart()
