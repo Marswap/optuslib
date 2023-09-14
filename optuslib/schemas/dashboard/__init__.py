@@ -19,4 +19,5 @@ from .indicators import (
 )
 from .operation import OperationToken, OperationUserAccount, DashboardBaseOperation, DashboardOperation
 from .pair import TokenIndicators, DashboardBasePair, DashboardPair, DashboardExtendedPair
+from .search import DashboardSearch
 from .token import DashboardBaseToken, DashboardToken, DashboardExtendedToken
