@@ -16,7 +16,7 @@ from ...constants import (
 
 
 class Indicator(BaseModel):
-    value: str = "--"
+    value: str = "0"
     change: str = "--"
 
     @validator("change", pre=True)
@@ -31,7 +31,7 @@ class Indicator(BaseModel):
     @validator("value", pre=True)
     def round_value(cls, value: float | int | str | None) -> str:
         if value is None:
-            return "--"
+            return "0"
         elif isinstance(value, str):
             return value
         else:
