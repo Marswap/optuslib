@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "optuslib"
-version = "0.1.50"
+version = "0.1.51"
 description = "Python library for OPTUS projects"
 authors = ["Aleksandr Kaekhtin <kaehtin.aa@gmail.com>"]
 
