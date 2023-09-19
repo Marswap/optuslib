@@ -1,4 +1,5 @@
 from .base import *
-from .dashboard import *
 from .coinmarketcap import *
+from .dashboard import *
+from .dex import *
 from .tonapi import *
