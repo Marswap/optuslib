@@ -1,1 +1,1 @@
-from oracle import *
+from .oracle import *
