@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from .base import DashboardBase
+from .base import DashboardBase, DashboardBaseList
 from .charts import ChartPoint, CandleChartPoint, PairSequence
 from .indicators import (
     PriceIndicator,
@@ -54,3 +54,7 @@ class DashboardExtendedPair(DashboardPair):
     token_two_pair_price: dict[int, float] = {}
     usd_liquidity: dict[int, float] = {}
     usd_volume: dict[int, float] = {}
+
+
+class DashboardPairList(DashboardBaseList):
+    data: list[DashboardBasePair]

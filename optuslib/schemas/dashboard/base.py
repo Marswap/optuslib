@@ -1,5 +1,6 @@
 from pydantic import BaseModel, root_validator
 
+from .meta import DashboardMeta
 from ...func.ton import to_friendly_address
 
 
@@ -14,3 +15,7 @@ class DashboardBase(BaseModel):
             values["user_friendly_address"] = to_friendly_address(values["address"])
 
         return values
+
+
+class DashboardBaseList(BaseModel):
+    meta: DashboardMeta

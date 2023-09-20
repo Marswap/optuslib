@@ -1,4 +1,4 @@
-from .base import DashboardBase
+from .base import DashboardBase, DashboardBaseList
 from .charts import ChartPoint, CandleChartPoint
 from .indicators import LiquidityIndicator, UsdLiquidityIndicator, UsdVolumeIndicator, PriceIndicator, Indicator
 
@@ -30,3 +30,7 @@ class DashboardExtendedToken(DashboardToken):
     token_transactions: dict[int, int] = {}
     usd_liquidity: dict[int, float] = {}
     usd_volume: dict[int, float] = {}
+
+
+class DashboardTokenList(DashboardBaseList):
+    data: list[DashboardBaseToken]

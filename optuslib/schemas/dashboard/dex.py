@@ -1,3 +1,4 @@
+from .base import DashboardBaseList
 from .db.dex import Dex
 from .charts import Chart
 from .indicators import Indicator, UsdLiquidity, UsdVolume, PriceIndicator, FeeIndicator
@@ -23,3 +24,7 @@ class DashboardExtendedDex(DashboardDex):
     usd_volume: dict[int, float] = {}
     ton_liquidity: dict[int, float] = {}
     ton_volume: dict[int, float] = {}
+
+
+class DashboardDexList(DashboardBaseList):
+    data: list[DashboardBaseDex]

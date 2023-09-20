@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from .base import DashboardBase
+from .base import DashboardBase, DashboardBaseList
 from .indicators import Indicator, UsdAmount
 
 
@@ -27,3 +27,7 @@ class DashboardBaseOperation(BaseModel):
 
 class DashboardOperation(DashboardBaseOperation):
     pass
+
+
+class DashboardOperationList(DashboardBaseList):
+    data: list[DashboardBaseOperation]
