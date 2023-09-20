@@ -8,7 +8,7 @@ class Address(BaseModel):
     user_friendly: str | None
 
     @root_validator
-    def validate_addresses(values: dict) -> dict:
+    def validate_addresses(cls, values: dict) -> dict:
         raw_address = values.get("raw", None)
         user_friendly_address = values.get("user_friendly", None)
 
