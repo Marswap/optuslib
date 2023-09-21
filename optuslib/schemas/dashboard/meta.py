@@ -11,7 +11,7 @@ class DashboardPagination(BaseModel):
 
 class DashboardSort(BaseModel):
     order: Order = Order.ASC
-    field: str | None
+    field: str = "id"
 
     class Config:
         use_enum_values = True
