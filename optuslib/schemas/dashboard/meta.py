@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field
 
-from ...enums import IndicatorField, Order
+from ...enums import Order
 
 
 class DashboardPagination(BaseModel):
@@ -12,7 +12,6 @@ class DashboardPagination(BaseModel):
 class DashboardSort(BaseModel):
     order: Order = Order.ASC
     field: str | None
-    indicator_field: IndicatorField = IndicatorField.VALUE
 
     class Config:
         use_enum_values = True
