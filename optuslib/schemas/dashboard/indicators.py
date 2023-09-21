@@ -17,12 +17,12 @@ from ...constants import (
 
 class Indicator(BaseModel):
     value: str = "0"
-    change: str = "--"
+    change: str = "0.0"
 
     @validator("change", pre=True)
     def check_change(cls, value: float | str) -> str:
         if value is None:
-            return "--"
+            return "0.0"
         elif isinstance(value, str):
             return value
         else:
