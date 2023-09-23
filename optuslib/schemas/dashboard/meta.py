@@ -25,4 +25,4 @@ class DashboardFilter(BaseModel):
 class DashboardMeta(BaseModel):
     pagination: DashboardPagination = DashboardPagination()
     sort: DashboardSort = DashboardSort()
-    filter: list[DashboardFilter] | None
+    filter: list[DashboardFilter] = []
