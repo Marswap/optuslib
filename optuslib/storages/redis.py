@@ -20,7 +20,7 @@ from ..schemas import (
 
 class RedisStorage(FastStorage):
     def __init__(self, url: str) -> None:
-        self._client: aioredis.Redis = aioredis.from_url(url, decode_responses=True)
+        self._client: aioredis.Redis = aioredis.from_url(url, decode_responses=True, socket_timeout=30)
 
     async def _set_item(
         self,
