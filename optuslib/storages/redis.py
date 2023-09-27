@@ -12,6 +12,7 @@ from ..schemas import (
     DashboardExtendedToken,
     DashboardPair,
     DashboardBasePair,
+    DashboardExtendedPair,
     DashboardAccount,
     DashboardBaseAccount,
     Pool,
@@ -134,16 +135,21 @@ class RedisStorage(FastStorage):
             DashboardExtendedToken if is_extended else DashboardToken,
         )
 
-    async def set_dashboard_pair(self, dashboard_pair: DashboardPair, dex_id: int | None) -> None:
+    async def set_dashboard_pair(self, dashboard_pair: DashboardExtendedPair, dex_id: int | None) -> None:
         await self._set_item(
             f"dashboard:pair:{dashboard_pair.id}:{dex_id}",
             dashboard_pair,
         )
 
-    async def get_dashboard_pair(self, pair_id: int, dex_id: int | None) -> DashboardPair | None:
+    async def get_dashboard_pair(
+        self,
+        pair_id: int,
+        dex_id: int | None,
+        is_extended: bool = False,
+    ) -> DashboardPair | DashboardExtendedPair | None:
         return await self._get_item(
             f"dashboard:pair:{pair_id}:{dex_id}",
-            DashboardPair,
+            DashboardExtendedPair if is_extended else DashboardPair,
         )
 
     async def set_dashboard_account(self, dashboard_account: DashboardAccount) -> None:

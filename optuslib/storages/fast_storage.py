@@ -8,6 +8,7 @@ from ..schemas import (
     DashboardExtendedToken,
     DashboardPair,
     DashboardBasePair,
+    DashboardExtendedPair,
     DashboardAccount,
     DashboardBaseAccount,
     Pool,
@@ -57,10 +58,15 @@ class FastStorage:
     ) -> DashboardToken | DashboardExtendedToken | None:
         ...
 
-    async def set_dashboard_pair(self, dashboard_pair: DashboardPair, dex_id: int | None) -> None:
+    async def set_dashboard_pair(self, dashboard_pair: DashboardExtendedPair, dex_id: int | None) -> None:
         ...
 
-    async def get_dashboard_pair(self, pair_id: int, dex_id: int | None) -> DashboardPair | None:
+    async def get_dashboard_pair(
+        self,
+        pair_id: int,
+        dex_id: int | None,
+        is_extended: bool = False,
+    ) -> DashboardPair | DashboardExtendedPair | None:
         ...
 
     async def set_dashboard_account(self, dashboard_account: DashboardAccount) -> None:
