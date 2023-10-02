@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 
-class Jetton(BaseModel):
+class OracleJetton(BaseModel):
     address: str
     name: str
     image: str | None
