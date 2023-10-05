@@ -7,4 +7,4 @@ class OracleJetton(BaseModel):
     image: str | None
     symbol: str
     decimals: int
-    existing_pair_jettons: list[str]
+    existing_pair_jettons: list[str] = []
