@@ -15,6 +15,7 @@ from ..schemas import (
     DashboardExtendedPair,
     DashboardAccount,
     DashboardBaseAccount,
+    OraclePool,
     Pool,
 )
 
@@ -204,6 +205,18 @@ class RedisStorage(FastStorage):
         return await self._get_list(
             f"dashboard:account_list:{dex_id}",
             DashboardBaseAccount,
+        )
+
+    async def set_oracle_pool(self, oracle_pool: OraclePool) -> None:
+        await self._set_item(
+            f"oracle:pool:{oracle_pool.id}",
+            oracle_pool,
+        )
+
+    async def get_oracle_pool(self, pool_id: int) -> OraclePool:
+        return await self._get_item(
+            f"oracle:pool:{pool_id}",
+            OraclePool,
         )
 
     async def set_pool_list(self, pool_list: list[Pool]) -> None:
