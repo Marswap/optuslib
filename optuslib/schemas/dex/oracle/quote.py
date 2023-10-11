@@ -5,6 +5,7 @@ from ...base.base_models import BaseUserFriendlyAddressModel
 
 class QuoteRequest(BaseUserFriendlyAddressModel):
     user_address: str
+    from_jetton_wallet_address: str
     from_token_address: str
     to_token_address: str
     from_token_amount: int | None
