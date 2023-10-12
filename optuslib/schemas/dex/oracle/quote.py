@@ -1,22 +1,21 @@
 from pydantic import BaseModel
 
-from ...base.base_models import BaseUserFriendlyAddressModel
+from ...base.base_models import BaseRawAddressModel
 
 
-class QuoteRequest(BaseUserFriendlyAddressModel):
+class QuoteRequest(BaseRawAddressModel):
     user_address: str
     from_jetton_wallet_address: str
-    from_token_address: str
-    to_token_address: str
-    from_token_amount: int | None
-    to_token_amount: int | None
+    from_address: str
+    to_address: str
+    from_amount: int | None
+    to_amount: int | None
     slippage_tolerance: float
 
 
 class QuoteProtocol(BaseModel):
     name: str
-    from_token_amount: int
-    to_token_amount: int
+    part: int
 
 
 class QuoteMessage(BaseModel):
@@ -30,4 +29,3 @@ class Quote(QuoteRequest):
     protocols: list[QuoteProtocol]
     messages: list[QuoteMessage]
     blockchain_fee: int
-    aggregator_fee: int

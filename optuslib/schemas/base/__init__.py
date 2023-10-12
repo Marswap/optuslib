@@ -1,2 +1,2 @@
 from .address import Address
-from .base_models import BaseUserFriendlyAddressModel
+from .base_models import BaseUserFriendlyAddressModel, BaseRawAddressModel
