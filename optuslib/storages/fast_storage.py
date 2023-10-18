@@ -103,7 +103,7 @@ class FastStorage:
     async def set_oracle_pool(self, oracle_pool: OraclePool) -> None:
         ...
 
-    async def get_oracle_pool(self, pool_id: int) -> OraclePool:
+    async def get_oracle_pool(self, pool_id: int) -> OraclePool | None:
         ...
 
     async def set_pool_list(self, pool_list: list[Pool]) -> None:

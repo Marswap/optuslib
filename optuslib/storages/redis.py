@@ -38,7 +38,7 @@ class RedisStorage(FastStorage):
         self,
         key: str,
         schema,
-    ) -> DashboardDexOverview | DashboardDex | DashboardToken | DashboardPair | DashboardAccount | None:
+    ) -> DashboardDexOverview | DashboardDex | DashboardToken | DashboardPair | DashboardAccount | OraclePool | None:
         raw_value = await self._client.get(key)
 
         if not raw_value:
@@ -213,7 +213,7 @@ class RedisStorage(FastStorage):
             oracle_pool,
         )
 
-    async def get_oracle_pool(self, pool_id: int) -> OraclePool:
+    async def get_oracle_pool(self, pool_id: int) -> OraclePool | None:
         return await self._get_item(
             f"oracle:pool:{pool_id}",
             OraclePool,
