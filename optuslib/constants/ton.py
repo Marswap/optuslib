@@ -1,4 +1,5 @@
-from ..schemas import Contract, ContractMetadata
+from ..schemas.dashboard.db.contract import Contract
+from ..schemas.dashboard.db.contract_metadata import ContractMetadata
 
 TON = Contract(
     address="0:0000000000000000000000000000000000000000000000000000000000000000",
