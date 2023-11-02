@@ -4,6 +4,7 @@ from pydantic import BaseModel
 class OraclePoolJetton(BaseModel):
     minter_address: str | None
     wallet_address: str | None
+    vault_address: str | None
     reserve: int | None
 
 
